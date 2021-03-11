@@ -1,6 +1,6 @@
-const mongoose = require('mongodb');
+const mongoose = require('mongoose');
 
-const WeatherSchema = new mongoose.Schemea({
+const WeatherSchema = new mongoose.Schema({
     zip: Number,
     coord: {
         lon: Number,
