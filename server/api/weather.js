@@ -1,4 +1,4 @@
-const WEATHER = require("../../models/Weather");
+const WEATHER = require("../models/Weather");
 const axios = require("axios");
 
 // Configuring the path to read the environment variable file, .env, to get the weather api key
@@ -7,10 +7,6 @@ require("dotenv").config({ path: "./../../../.env" });
 const baseUrl = "http://api.openweathermap.org/data/2.5/weather";
 
 class Weather {
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
     getWeatherData = async (zipCode, tempMetric) => {
     /**
      * Gets the weather data based on the zipcode and which temp system to converge to (imperial/metric system)
@@ -26,47 +22,6 @@ class Weather {
     return (await axios(url)).data;
   }
 
-<<<<<<< HEAD
-    saveWeatherDatatoMongo = async (zipCode, data) => {
-        /**
-         * Saves the weather data using the zipcode as the unizue identifier
-         * If it already exists, replace, if not, then add.
-         * 
-         * @param {number} zipCode The zipcode used to identifiy the document to upsert
-         * @param {string} data Weather data to save/update
-         * @return {JSON} The data response from the weather api data.
-         */
-
-        const filter = {
-            zip: zipCode
-        }
-
-        const replace = {
-            ...filter,
-            ...data,
-            data: Date.now()
-        }
-        await this.findOneReplace(filter, replace);
-    }
-
-    getWeatherDataFromMongo = async (zipCode) => {
-        /**
-         * Gets Weather Data from Mongodb.
-         * @param {number} zipCode The zipcode is used as unique identifier to find the document in mongoDB.
-         * @return {JSON} The data response from mongoDB.
-         */
-        return WEATHER.findOne({zip: zipCode});
-    }
-
-    async findOneReplace(filter, replace) {
-        /**
-         * If a document already exists with the filter, then replace, if not, add.
-         * @param {{zip: number}} filter The filter is the zipcode used as unique identifier to find the document in mongoDB.
-         * @return {JSON} The data response from mondoDB.
-         */
-        await WEATHER.findOneAndReplace(filter, replace, {new: true, upsert: true});
-    }
-=======
   saveWeatherDataToMongo = async (zipCode, data) => {
   /**
    * Saves the weather data using hte zipcode as the unique identifier
@@ -108,7 +63,6 @@ class Weather {
   async findOneReplace(filter, replace) {
       await WEATHER.findOneAndReplace(filter, replace, {new: true, upsert: true});
   }
->>>>>>> dev
 }
 
 module.exports = Weather;
