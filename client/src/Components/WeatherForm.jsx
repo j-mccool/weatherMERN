@@ -33,7 +33,7 @@ class WeatherForm extends Component {
     saveFormData = (event) => {
         event.preventDefault();
 
-        // Gets the weather dataa from the weather api and returns it to save into local storage
+        // Gets the weather data from the weather api and returns it to save into local storage
         axios.post("/api/weather", {
             zipCode: this.state.zipCodeInput,
             tempMetric: this.state.tempMetric
@@ -53,7 +53,7 @@ class WeatherForm extends Component {
 
     render() {
         return (
-            <Form className="weather-form" >
+            <Form className="weather-form" onSubmit={this.saveFormData}>
 
                 <Row type="flex" justify="center" align="center" className="zipCode">
                     <Col>

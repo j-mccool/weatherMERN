@@ -42,7 +42,7 @@ class WeatherHistoryPanel extends Component {
 
     getInfoListItem = (info) => {
         return (
-            <ListGroup.Item><b>{info.timestamp}</b> -
+            <ListGroup.Item key={info.id}><b>{info.timestamp}</b> -
                 [{info.city}, {info.zipcode}]:[{info.temperature}, {info.description}]</ListGroup.Item>
         );
     }
