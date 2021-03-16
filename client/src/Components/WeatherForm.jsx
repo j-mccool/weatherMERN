@@ -40,7 +40,7 @@ class WeatherForm extends Component {
         }).then(response => {
             let weatherData = response.data;
 
-            this.saveToLocalStorage(weatherData);
+            this.saveToMongo(weatherData);
         });
     }
 
@@ -49,6 +49,16 @@ class WeatherForm extends Component {
         localStorage.setItem("zipCode", this.state.zipCodeInput);
         localStorage.setItem("tempMetric", this.state.tempMetric);
         localStorage.setItem("CurrentWeatherData", JSON.stringify(weatherData));
+    }
+
+    saveToMongo = (event) => {
+        axios.post("/api/weatherMongo", {
+            zipCode: this.state.zipCodeInput,
+            tempMetric: this.state.tempMetric
+        }).then(response => {
+            let weatherData = response.data;
+            console.log(weatherData);
+        });
     }
 
     render() {
