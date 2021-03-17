@@ -9,6 +9,7 @@ class WeatherHistoryPanel extends Component {
         let historyList = this.props.history;
 
         // Listing history of zip code submissions in "most recent" order
+        // TODO: this doesn't work... it doesn't limit the history, which spreads the weather info panel container out vertically...
         for (let i = historyList.length - 1; i >= 0; i--) {
             let infoCard = this.getInfoListItem(historyList[i]);
             historyComponents.push(infoCard);

@@ -7,8 +7,7 @@ import {connect} from "react-redux";
 import {saveZipCode, saveWeatherData, saveTemperature, updateHistory} from '../actions';
 
 class WeatherForm extends Component {
-    // default state values
-    // componentDidMount()
+
     state = {
         tempMetric: "imperial",
         zipCodeInput: "98052"
@@ -25,8 +24,8 @@ class WeatherForm extends Component {
                 zipCode: localStorage.getItem("zipCode"),
                 tempMetric: localStorage.getItem("tempMetric")
             }).then(d => {
-                this.props.saveWeatherData(d.data);
                 localStorage.setItem("CurrentWeatherData", JSON.stringify(d.data));
+                this.props.saveWeatherData(d.data);
             });
         }
     }
@@ -38,13 +37,14 @@ class WeatherForm extends Component {
     saveFormData = (event) => {
         event.preventDefault();
 
-        // Gets the weather data from the weather api and returns it to save into local storage
+        // Gets the weather data from the weather api and returns it to save into local storage and mongo storage
         axios.post("/api/weather", {
             zipCode: this.state.zipCodeInput,
             tempMetric: this.state.tempMetric
         }).then(response => {
             let weatherData = response.data;
             
+            this.saveToStore(weatherData);
             this.saveToLocalStorage(weatherData);
             this.saveToMongo(weatherData);
         });
@@ -55,11 +55,12 @@ class WeatherForm extends Component {
         localStorage.setItem("zipCode", this.state.zipCodeInput);
         localStorage.setItem("tempMetric", this.state.tempMetric);
         localStorage.setItem("CurrentWeatherData", JSON.stringify(weatherData));
+        localStorage.setItem("WeatherHistory", JSON.stringify(this.props.history));
     }
 
     // Save data to the Redux store
     saveToStore = (weatherData) => {
-        this.props.saveTemperature(this.sate.tempMetric);
+        this.props.saveTemperature(this.state.tempMetric);
         this.props.saveZipCode(this.state.zipCodeInput);
         this.props.saveWeatherData(weatherData);
 
