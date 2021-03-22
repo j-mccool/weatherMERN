@@ -19,12 +19,12 @@ class WeatherForm extends Component {
 
     // Refreshes the current weather data for the most recent zip code, if it exists
     refreshSavedWeather = () => {
-        if (localStorage.getItem("zipCode")) {
+        if (sessionStorage.getItem("zipCode")) {
             axios.post("/api/weather", {
-                zipCode: localStorage.getItem("zipCode"),
-                tempMetric: localStorage.getItem("tempMetric")
+                zipCode: sessionStorage.getItem("zipCode"),
+                tempMetric: sessionStorage.getItem("tempMetric")
             }).then(d => {
-                localStorage.setItem("CurrentWeatherData", JSON.stringify(d.data));
+                sessionStorage.setItem("CurrentWeatherData", JSON.stringify(d.data));
                 this.props.saveWeatherData(d.data);
             });
         }
@@ -45,17 +45,17 @@ class WeatherForm extends Component {
             let weatherData = response.data;
             
             this.saveToStore(weatherData);
-            this.saveToLocalStorage(weatherData);
-            this.saveToMongo(weatherData);
+            this.saveToSessionStorage(weatherData);
+            // this.saveToMongo(weatherData);
         });
     }
 
     // Save data from form to local storage
-    saveToLocalStorage = (weatherData) => {
-        localStorage.setItem("zipCode", this.state.zipCodeInput);
-        localStorage.setItem("tempMetric", this.state.tempMetric);
-        localStorage.setItem("CurrentWeatherData", JSON.stringify(weatherData));
-        localStorage.setItem("WeatherHistory", JSON.stringify(this.props.history));
+    saveToSessionStorage = (weatherData) => {
+        sessionStorage.setItem("zipCode", this.state.zipCodeInput);
+        sessionStorage.setItem("tempMetric", this.state.tempMetric);
+        sessionStorage.setItem("CurrentWeatherData", JSON.stringify(weatherData));
+        sessionStorage.setItem("WeatherHistory", JSON.stringify(this.props.history));
     }
 
     // Save data to the Redux store
@@ -73,15 +73,15 @@ class WeatherForm extends Component {
         });
     }
 
-    saveToMongo = (event) => {
-        axios.post("/api/weatherMongo", {
-            zipCode: this.state.zipCodeInput,
-            tempMetric: this.state.tempMetric
-        }).then(response => {
-            let weatherData = response.data;
-            console.log(weatherData);
-        });
-    }
+    // saveToMongo = (event) => {
+    //     axios.post("/api/weatherMongo", {
+    //         zipCode: this.state.zipCodeInput,
+    //         tempMetric: this.state.tempMetric
+    //     }).then(response => {
+    //         let weatherData = response.data;
+    //         console.log(weatherData);
+    //     });
+    // }
 
     render() {
         return (

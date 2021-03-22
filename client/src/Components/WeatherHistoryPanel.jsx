@@ -14,7 +14,7 @@ class WeatherHistoryPanel extends Component {
             let infoCard = this.getInfoListItem(historyList[i]);
             historyComponents.push(infoCard);
         }
-
+        console.log("History length: ", historyComponents.length);
         return (
             <Card>
                 <ListGroup variant="flush">

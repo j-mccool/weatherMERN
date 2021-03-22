@@ -1,6 +1,6 @@
 // Get initial state from the previously saved data in [local] storage
 let getHistoryFromLocal = () => {
-    let value = localStorage.getItem('WeatherHistory')
+    let value = sessionStorage.getItem('WeatherHistory')
     return JSON.parse(value) || [];
 }
 
